@@ -7,6 +7,8 @@ import { Hero } from "@/components/landing/hero"
 import { ScanInput } from "@/components/landing/scan-input"
 import { FeaturesGrid } from "@/components/landing/features-grid"
 import { SocialProof } from "@/components/landing/social-proof"
+import { ThreatFeed } from "@/components/landing/threat-feed"
+import { CompetitorComparison } from "@/components/landing/competitor-comparison"
 import { Header } from "@/components/shared/header"
 import { Button } from "@/components/ui/button"
 
@@ -66,6 +68,9 @@ export default function Home() {
         </motion.section>
 
         <FeaturesGrid />
+
+        <ThreatFeed />
+        <CompetitorComparison />
 
         {/* Trust Signals */}
         <motion.section
