@@ -49,8 +49,8 @@ export function PackageRow({ node, onClick }: PackageRowProps) {
       </td>
       <td className="p-3"><RiskBadge level={node.riskLevel} size="sm" /></td>
       <td className="p-3 text-xs text-muted-foreground">{node.alerts.length || "-"}</td>
-      <td className="p-3 text-xs text-muted-foreground font-mono">{formatDownloads(node.metadata.weeklyDownloads)}</td>
-      <td className="p-3 text-xs text-muted-foreground font-mono">{node.version}</td>
+      <td className="p-3 text-xs text-muted-foreground font-mono max-sm:hidden">{formatDownloads(node.metadata.weeklyDownloads)}</td>
+      <td className="p-3 text-xs text-muted-foreground font-mono max-sm:hidden">{node.version}</td>
     </tr>
   )
 }

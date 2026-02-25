@@ -76,15 +76,13 @@ Landing -> Scan Input -> Progress Animation -> Dashboard -> Package Detail
 
 **No database** — everything computed on-the-fly per scan. Zero data retention.
 
-## Revenue Model
+## Pricing
 
-| Tier | Price | Target |
-|------|-------|--------|
+| Tier | Price | For |
+|------|-------|-----|
 | Free | $0 | Solo maintainers, 5 public repos |
 | Pro | $49/mo | Shipping teams, unlimited repos + CI/CD |
 | Enterprise | $199/seat/mo | Regulated orgs, SSO + audit + on-prem |
-
-**Path to $10K MRR**: 200 Pro teams ($9,800) or 50 Enterprise seats ($9,950)
 
 ## Development
 

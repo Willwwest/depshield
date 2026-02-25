@@ -8,7 +8,7 @@ import {
   Check,
   ChevronDown,
   CircleX,
-  Factory,
+
   Shield,
   Sparkles,
 } from "lucide-react"
@@ -151,7 +151,7 @@ export default function PricingPage() {
           className="text-center space-y-5"
         >
           <Badge className="glass border-white/15 text-[11px] tracking-wide uppercase">
-            Revenue-ready pricing
+            Simple, transparent pricing
           </Badge>
           <h1 className="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
             Invest in <span className="text-gradient">Supply Chain Visibility</span>,
@@ -159,8 +159,8 @@ export default function PricingPage() {
             avoid million-dollar dependency surprises.
           </h1>
           <p className="max-w-3xl mx-auto text-sm md:text-base text-muted-foreground">
-            A clear expansion path from solo maintainers to enterprise security teams. Simple entry,
-            strong retention, and obvious upside to $10K+ MRR.
+            Free for solo maintainers. Pro for shipping teams. Enterprise for regulated organizations.
+            Start scanning in under 2 minutes.
           </p>
 
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 glass px-2 py-1">
@@ -268,42 +268,13 @@ export default function PricingPage() {
           })}
         </section>
 
-        <motion.section
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
-          className="glass rounded-2xl border border-white/10 p-5 md:p-6 space-y-4"
-        >
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Factory className="h-4 w-4 text-primary" />
-            How we get to $10K MRR
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Pro expansion</p>
-              <p className="text-lg md:text-xl font-semibold">200 Pro teams x $49 = $9,800/mo</p>
-              <p className="text-sm text-muted-foreground mt-1">
-                Team-led adoption through CI automation and weekly risk digests.
-              </p>
-            </div>
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground mb-1">Enterprise runway</p>
-              <p className="text-lg md:text-xl font-semibold">50 Enterprise seats x $199 = $9,950/mo</p>
-              <p className="text-sm text-muted-foreground mt-1">
-                Security and platform teams consolidate governance with SSO and audit controls.
-              </p>
-            </div>
-          </div>
-        </motion.section>
-
         <section className="glass rounded-2xl border border-white/10 overflow-hidden">
           <div className="p-5 md:p-6 border-b border-white/10">
             <h2 className="text-xl font-semibold tracking-tight">Feature comparison</h2>
             <p className="text-sm text-muted-foreground mt-1">Quick view of what each tier unlocks.</p>
           </div>
           <div className="p-3 md:p-4 overflow-x-auto">
-            <table className="w-full min-w-[560px] text-sm">
+            <table className="w-full min-w-[420px] text-sm">
               <thead>
                 <tr className="text-left text-muted-foreground border-b border-white/10">
                   <th className="py-3 px-3 font-medium">Capability</th>
@@ -359,7 +330,7 @@ export default function PricingPage() {
         <section className="space-y-4 pb-8">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-semibold tracking-tight">Frequently asked questions</h2>
+              <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">Frequently asked questions</h2>
               <p className="text-sm text-muted-foreground mt-1">Everything security, procurement, and engineering asks first.</p>
             </div>
           </div>

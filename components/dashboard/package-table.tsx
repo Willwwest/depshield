@@ -56,13 +56,17 @@ export function PackageTable({ dependencies, onPackageClick, className }: Packag
         <span className="text-xs text-muted-foreground">({dependencies.length})</span>
       </div>
       <ScrollArea className="h-[500px]">
-        <table className="w-full">
+        <div className="overflow-x-auto">
+        <table className="w-full min-w-[480px]">
           <thead>
             <tr className="border-b border-white/5 text-xs text-muted-foreground">
               {([["name", "Package"], ["healthScore", "Health"], ["riskLevel", "Risk"], ["alerts", "Alerts"], ["downloads", "Downloads"]] as [SortKey, string][]).map(([key, label]) => (
                 <th
                   key={key}
-                  className="p-3 text-left font-medium cursor-pointer hover:text-foreground transition-colors"
+                  className={cn(
+                    "p-3 text-left font-medium cursor-pointer hover:text-foreground transition-colors",
+                    (key === "downloads") && "max-sm:hidden"
+                  )}
                   onClick={() => toggleSort(key)}
                 >
                   <div className="flex items-center gap-1">
@@ -71,7 +75,7 @@ export function PackageTable({ dependencies, onPackageClick, className }: Packag
                   </div>
                 </th>
               ))}
-              <th className="p-3 text-left font-medium">
+              <th className="p-3 text-left font-medium max-sm:hidden">
                 <span>Version</span>
               </th>
             </tr>
@@ -86,6 +90,7 @@ export function PackageTable({ dependencies, onPackageClick, className }: Packag
             ))}
           </tbody>
         </table>
+        </div>
       </ScrollArea>
     </div>
   )

@@ -97,17 +97,18 @@ export function ThreatFeed() {
                 <Icon className="h-3.5 w-3.5" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
+                <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                   <code className="text-sm font-mono font-semibold text-foreground">{threat.package}</code>
                   <span className={`text-[10px] uppercase tracking-wider font-bold px-1.5 py-0.5 rounded ${SEVERITY_STYLES[threat.severity]}`}>
                     {threat.severity}
                   </span>
+                  <span className="text-[11px] text-muted-foreground sm:hidden">{threat.detectedAgo}</span>
                 </div>
-                <p className="text-xs text-muted-foreground leading-relaxed truncate">
+                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
                   {threat.summary}
                 </p>
               </div>
-              <div className="shrink-0 flex items-center gap-2">
+              <div className="shrink-0 items-center gap-2 flex max-sm:hidden">
                 <span className="text-[11px] text-muted-foreground whitespace-nowrap">{threat.detectedAgo}</span>
                 <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>

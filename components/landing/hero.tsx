@@ -16,7 +16,7 @@ export function Hero() {
     >
       <motion.div variants={item} className="mb-6">
         <Badge variant="secondary" className="text-xs px-3 py-1 border border-primary/20 bg-primary/10 text-primary">
-          Now in public beta &mdash; 847 teams and counting
+          Now in public beta &mdash; try it free
         </Badge>
       </motion.div>
       <motion.h1 variants={item} className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1]">
