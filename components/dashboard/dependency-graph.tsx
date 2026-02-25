@@ -39,15 +39,15 @@ export function DependencyGraph({ data, onNodeClick, className }: DependencyGrap
   const nodeCanvasObject = useCallback((node: Record<string, unknown>, ctx: CanvasRenderingContext2D) => {
     const x = (node.x as number) || 0;
     const y = (node.y as number) || 0;
-    const val = (node.val as number) || 6;
+    const val = (node.val as number) || 4;
     const color = (node.color as string) || "#6366F1";
     const name = (node.name as string) || "";
     const riskLevel = (node.riskLevel as string) || "info";
-    const size = val * 1.2;
+    const size = Math.max(3, Math.min(8, val * 0.55));
 
-    const glowRadius = size + 8;
+    const glowRadius = size + 4;
     const gradient = ctx.createRadialGradient(x, y, size * 0.3, x, y, glowRadius);
-    gradient.addColorStop(0, color + "60");
+    gradient.addColorStop(0, color + "40");
     gradient.addColorStop(1, color + "00");
     ctx.fillStyle = gradient;
     ctx.beginPath();
@@ -57,12 +57,12 @@ export function DependencyGraph({ data, onNodeClick, className }: DependencyGrap
     if (riskLevel === "critical") {
       const pulse = 0.7 + Math.sin(Date.now() / 400) * 0.3;
       ctx.globalAlpha = pulse;
-      const pulseGrad = ctx.createRadialGradient(x, y, size, x, y, size + 15);
+      const pulseGrad = ctx.createRadialGradient(x, y, size, x, y, size + 6);
       pulseGrad.addColorStop(0, color + "40");
       pulseGrad.addColorStop(1, color + "00");
       ctx.fillStyle = pulseGrad;
       ctx.beginPath();
-      ctx.arc(x, y, size + 15, 0, 2 * Math.PI);
+      ctx.arc(x, y, size + 6, 0, 2 * Math.PI);
       ctx.fill();
       ctx.globalAlpha = 1;
     }
@@ -72,13 +72,13 @@ export function DependencyGraph({ data, onNodeClick, className }: DependencyGrap
     ctx.arc(x, y, size, 0, 2 * Math.PI);
     ctx.fill();
 
-    ctx.fillStyle = "#0A0E1A";
+    ctx.fillStyle = color + "40";
     ctx.beginPath();
-    ctx.arc(x, y, size * 0.5, 0, 2 * Math.PI);
+    ctx.arc(x, y, size * 0.35, 0, 2 * Math.PI);
     ctx.fill();
 
-    const label = name.length > 15 ? name.slice(0, 13) + ".." : name;
-    const fontSize = Math.max(3.5, size * 0.55);
+    const label = name.length > 18 ? name.slice(0, 16) + ".." : name;
+    const fontSize = Math.max(3, Math.min(5, size * 0.65));
     ctx.font = `${fontSize}px sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
@@ -105,7 +105,7 @@ export function DependencyGraph({ data, onNodeClick, className }: DependencyGrap
           nodePointerAreaPaint={(node: Record<string, unknown>, color: string, ctx: CanvasRenderingContext2D) => {
             const x = (node.x as number) || 0;
             const y = (node.y as number) || 0;
-            const size = ((node.val as number) || 6) * 1.2;
+            const size = Math.max(3, Math.min(8, ((node.val as number) || 4) * 0.55));
             ctx.fillStyle = color;
             ctx.beginPath();
             ctx.arc(x, y, size + 4, 0, 2 * Math.PI);
@@ -114,14 +114,15 @@ export function DependencyGraph({ data, onNodeClick, className }: DependencyGrap
           onNodeClick={(node: Record<string, unknown>) => {
             if (onNodeClick && node.id) onNodeClick(node.id as string);
           }}
-          linkColor={() => "rgba(255,255,255,0.06)"}
-          linkWidth={1}
-          linkDirectionalArrowLength={3}
+          linkColor={() => "rgba(255,255,255,0.08)"}
+          linkWidth={0.8}
+          linkDirectionalArrowLength={2.5}
           linkDirectionalArrowRelPos={1}
           cooldownTicks={100}
           warmupTicks={50}
-          d3AlphaDecay={0.03}
-          d3VelocityDecay={0.3}
+          d3AlphaDecay={0.02}
+          d3VelocityDecay={0.25}
+          d3AlphaMin={0.005}
         />
       )}
       <div className="absolute bottom-3 right-3 flex flex-col gap-1">

@@ -372,7 +372,7 @@ const expressAlerts: RiskAlert[] = expressDeps.flatMap(dep => dep.alerts);
 const expressGraphData: GraphData = {
   nodes: [
     // Root node
-    { id: 'express-app', name: 'your-app', healthScore: 100, healthGrade: 'A', riskLevel: 'info', alertCount: 0, isDirectDependency: true, weeklyDownloads: 0, val: 20, color: '#6366F1' },
+    { id: 'express-app', name: 'your-app', healthScore: 100, healthGrade: 'A', riskLevel: 'info', alertCount: 0, isDirectDependency: true, weeklyDownloads: 0, val: 10, color: '#6366F1' },
     // Dependency nodes
     ...expressDeps.map(dep => ({
       id: dep.name,
@@ -383,7 +383,7 @@ const expressGraphData: GraphData = {
       alertCount: dep.alerts.length,
       isDirectDependency: dep.isDirectDependency,
       weeklyDownloads: dep.metadata.weeklyDownloads,
-      val: Math.max(5, Math.min(18, Math.log10(dep.metadata.weeklyDownloads + 1) * 2.5)),
+      val: Math.max(3, Math.min(12, Math.log10(dep.metadata.weeklyDownloads + 1) * 1.5)),
       color: dep.riskLevel === 'critical' ? '#EF4444' : dep.riskLevel === 'high' ? '#F97316' : dep.riskLevel === 'medium' ? '#FACC15' : dep.riskLevel === 'low' ? '#22D3EE' : '#10B981',
     })),
   ],
