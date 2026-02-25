@@ -43,7 +43,9 @@ export function analyzeLicenseMutation(pkg: NpmPackageResponse): LicenseMutation
 
   let changes = 0;
   for (let index = 1; index < versions.length; index += 1) {
-    if (versions[index].license !== versions[index - 1].license) {
+    const prev = versions[index - 1].license;
+    const curr = versions[index].license;
+    if (curr !== prev && prev !== 'UNKNOWN' && curr !== 'UNKNOWN') {
       changes += 1;
     }
   }
