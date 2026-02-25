@@ -23,6 +23,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { CheckoutDialog } from "@/components/pricing/checkout-dialog"
 
 type BillingCycle = "monthly" | "annual"
 
@@ -129,6 +130,7 @@ function FeatureCell({ enabled }: { enabled: boolean }) {
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly")
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0)
+  const [checkoutTier, setCheckoutTier] = useState<PricingTier | null>(null)
 
   const annualSavings = useMemo(() => {
     const pro = tiers.find((tier) => tier.name === "Pro")
@@ -248,6 +250,13 @@ export default function PricingPage() {
                         isPro ? "bg-primary hover:bg-primary/90" : "",
                         tier.name === "Enterprise" ? "bg-white/10 hover:bg-white/15 border border-white/15" : "",
                       ].join(" ")}
+                      onClick={() => {
+                        if (tier.name === "Free") {
+                          window.location.href = "/scan"
+                        } else {
+                          setCheckoutTier(tier)
+                        }
+                      }}
                     >
                       {tier.cta}
                       <ArrowRight className="h-4 w-4" />
@@ -385,6 +394,20 @@ export default function PricingPage() {
           </div>
         </section>
       </main>
+
+      <CheckoutDialog
+        open={checkoutTier !== null}
+        onClose={() => setCheckoutTier(null)}
+        plan={{
+          name: checkoutTier?.name ?? "Pro",
+          price:
+            billingCycle === "annual" && checkoutTier?.annualPrice
+              ? checkoutTier.annualPrice
+              : checkoutTier?.monthlyPrice ?? 49,
+          priceSuffix: checkoutTier?.priceSuffix ?? "/mo",
+          billingCycle,
+        }}
+      />
     </div>
   )
 }

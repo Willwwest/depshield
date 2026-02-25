@@ -1,0 +1,40 @@
+name: "DepShield Scan"
+description: "AI-powered dependency supply chain intelligence. Detect risky dependencies before they ship to production."
+author: "DepShield"
+
+branding:
+  icon: "shield"
+  color: "purple"
+
+inputs:
+  token:
+    description: "DepShield API token (get one at depshield.dev/settings)"
+    required: false
+  github-token:
+    description: "GitHub token for PR comments (defaults to built-in token)"
+    required: false
+    default: "${{ github.token }}"
+  fail-on:
+    description: "Fail the check at this severity or higher: critical | high | medium | low"
+    required: false
+    default: "critical"
+  scan-dev-deps:
+    description: "Include devDependencies in the scan"
+    required: false
+    default: "false"
+
+outputs:
+  health-grade:
+    description: "Overall health grade (A-F)"
+  health-score:
+    description: "Overall health score (0-100)"
+  critical-count:
+    description: "Number of critical-severity alerts"
+  high-count:
+    description: "Number of high-severity alerts"
+  report-url:
+    description: "Link to the full DepShield report"
+
+runs:
+  using: "node20"
+  main: "action/index.mjs"

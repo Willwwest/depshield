@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DepShield
 
-## Getting Started
+**AI-powered Dependency Supply Chain Intelligence**
 
-First, run the development server:
+> Socket detects the bomb. We detect the bomb-maker.
+
+DepShield predicts which npm dependencies are **about to become dangerous** by tracking human and organizational signals — not just CVEs. We catch maintainer takeovers, slopsquatting attacks, bus-factor risks, and license mutations *before* they become incidents.
+
+## Why DepShield?
+
+Traditional dependency scanners react to **known vulnerabilities** (CVEs). But the most devastating supply chain attacks — event-stream, ua-parser-js, colors.js — had **zero CVEs at the time of compromise**. The warning signs were behavioral:
+
+- A new maintainer appeared on a dormant package
+- An account with no history published a version
+- A package name was 1 character off from a popular library
+
+DepShield tracks these **human signals** and scores every dependency on a 0-100 health scale.
+
+## Features
+
+- **Health Scoring** — Every dependency gets a grade (A-F) based on maintainer activity, contributor bus factor, and organizational trust
+- **Takeover Detection** — Flags suspicious maintainer changes, publisher swaps, and repository URL mutations
+- **Slopsquatting Detection** — Catches AI-generated typosquat packages using Levenshtein distance + download anomaly analysis
+- **License Mutation Tracking** — Alerts when dependencies silently change from MIT to GPL or other restrictive licenses
+- **Migration Advisor** — Suggests healthier alternatives with effort estimates when a dependency is flagged
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install globally
+npm install -g depshield
+
+# Scan your project
+npx depshield scan
+
+# Or use as a GitHub Action
+# See: action.yml
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## GitHub Action
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Add to `.github/workflows/depshield.yml`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```yaml
+name: DepShield
+on: [pull_request]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: depshield/action@v1
+        with:
+          token: ${{ secrets.DEPSHIELD_TOKEN }}
+          fail-on: critical
+```
 
-## Learn More
+Every PR gets an automated comment with dependency risk findings:
 
-To learn more about Next.js, take a look at the following resources:
+| Package | Risk | Issue |
+|---------|------|-------|
+| `qs` | CRITICAL | Suspicious maintainer change |
+| `expresss-validator` | CRITICAL | Slopsquatting detected |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Architecture
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+Landing -> Scan Input -> Progress Animation -> Dashboard -> Package Detail
+    |         |              |                  |            |
+  Pricing  Integrations   API Routes      Force Graph    Risk Breakdown
+```
 
-## Deploy on Vercel
+**Tech stack**: Next.js 16, React 19, Tailwind CSS v4, shadcn/ui, react-force-graph-2d, framer-motion
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Data sources**: npm Registry API, GitHub REST API, npm Downloads API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**No database** — everything computed on-the-fly per scan. Zero data retention.
+
+## Revenue Model
+
+| Tier | Price | Target |
+|------|-------|--------|
+| Free | $0 | Solo maintainers, 5 public repos |
+| Pro | $49/mo | Shipping teams, unlimited repos + CI/CD |
+| Enterprise | $199/seat/mo | Regulated orgs, SSO + audit + on-prem |
+
+**Path to $10K MRR**: 200 Pro teams ($9,800) or 50 Enterprise seats ($9,950)
+
+## Development
+
+```bash
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # Production build
+```
+
+## License
+
+MIT
