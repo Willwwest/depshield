@@ -27,7 +27,7 @@ export function Header({ repoName, showBackButton, showNav, className }: HeaderP
           </Link>
         </div>
         {showNav && (
-          <nav className="hidden sm:flex items-center gap-1">
+          <nav className="flex max-sm:hidden items-center gap-1">
             <Link href="/pricing" className="px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-white/5">
               Pricing
             </Link>

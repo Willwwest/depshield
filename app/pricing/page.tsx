@@ -155,7 +155,7 @@ export default function PricingPage() {
           </Badge>
           <h1 className="text-3xl md:text-5xl font-semibold tracking-tight leading-tight">
             Invest in <span className="text-gradient">Supply Chain Visibility</span>,
-            <br className="hidden md:block" />
+            <br className="block max-md:hidden" />
             avoid million-dollar dependency surprises.
           </h1>
           <p className="max-w-3xl mx-auto text-sm md:text-base text-muted-foreground">
