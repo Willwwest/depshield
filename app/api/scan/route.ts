@@ -27,7 +27,10 @@ function streamError(message: string) {
 function parseDependencies(packageJson: string): Record<string, string> {
   try {
     const parsed = JSON.parse(packageJson);
-    return parsed.dependencies || {};
+    return {
+      ...parsed.dependencies,
+      ...parsed.devDependencies,
+    };
   } catch {
     throw new Error('Invalid package.json format');
   }
@@ -288,6 +291,31 @@ export async function POST(request: NextRequest) {
 
         const pkgText = await pkgResponse.text();
         deps = parseDependencies(pkgText);
+
+        if (Object.keys(deps).length === 0) {
+          const parsed = JSON.parse(pkgText);
+          const workspaces: string[] = Array.isArray(parsed.workspaces)
+            ? parsed.workspaces
+            : parsed.workspaces?.packages || [];
+
+          if (workspaces.length > 0 || parsed.pnpm) {
+            const commonPaths = [
+              'packages', 'apps', 'package', 'src',
+              ...workspaces.map((w: string) => w.replace(/\/\*$/, '')),
+            ];
+            const uniquePaths = [...new Set(commonPaths)];
+
+            for (const dir of uniquePaths) {
+              const subPkgUrl = `https://raw.githubusercontent.com/${repoName}/main/${dir}/package.json`;
+              const subResp = await fetch(subPkgUrl);
+              if (subResp.ok) {
+                const subText = await subResp.text();
+                const subDeps = parseDependencies(subText);
+                Object.assign(deps, subDeps);
+              }
+            }
+          }
+        }
       } else {
         return NextResponse.json({ error: 'Invalid input. Provide an npm package name (e.g. "express") or a GitHub URL.' }, { status: 400 });
       }
